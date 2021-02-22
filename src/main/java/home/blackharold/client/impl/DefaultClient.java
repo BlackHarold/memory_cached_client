@@ -26,7 +26,7 @@ class DefaultClient implements Client {
     private final InputStream inputStream;
     private final OutputStream outputStream;
 
-    public DefaultClient(ClientConfig clientConfig) throws IOException {
+    DefaultClient(ClientConfig clientConfig) throws IOException {
         this.objectSerializer = clientConfig.getObjectSerializer();
         this.requestConverter = clientConfig.getRequestConverter();
         this.responseConverter = clientConfig.getResponseConverter();
@@ -67,7 +67,7 @@ class DefaultClient implements Client {
 
     @Override
     public Status remove(String key) throws IOException {
-        Response response = makeRequest(new Request(Command.GET, key));
+        Response response = makeRequest(new Request(Command.REMOVE, key));
         return response.getStatus();
     }
 
@@ -78,7 +78,7 @@ class DefaultClient implements Client {
     }
 
     @Override
-    public void close() throws Exception {
-        socket.close();
+    public void close() throws IOException {
+        this.socket.close();
     }
 }
